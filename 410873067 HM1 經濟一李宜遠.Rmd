@@ -41,7 +41,7 @@ library(lubridate); library(jsonlite); library(readr)
 "Error in library(lubridate) : there is no package called ‘lubridate’"
 
 ```{r ans21c}
-install.packages(c("lubridate"))
+install.packages(c("lubridate"))  #此題不需執行也不需存在哪邊，因只是要確定自己知道怎麼裝
 ```
 
 ### 2.2
@@ -56,11 +56,11 @@ oslo_time <- "18.11.2018 15:33:02"
 ```{r ans22}
 # 用vector # 3.5.3.3節
 two_times <- c(
-  ymd_hms(taiwan_time,tz="Asia/Taipei"), #向量1 #Date/Time
+  ymd_hms(taiwan_time,tz="Asia/Taipei"), #向量1 #Date/Time #怎麼存
   dmy_hms(oslo_time,tz="Europe/Oslo") #向量2 #Date/Time
 )
 
-class(two_times)
+
 two_times 
 ```
 
@@ -74,8 +74,18 @@ two_times_chicago <- c(
   dmy_hms(oslo_time,tz="America/Chicago")
 )
 
+two_times_chicago 
+```
+
+```{r ans23 correct}
+two_times_chicago <- with_tz(two_times, tz="America/Chicago")
+
+with_tz(two_times, tz="America/Chicago") -> #怎麼顯示
+two_times_chicago #存回檔案物件
+
 two_times_chicago
 ```
+
 
 ## 3 List
 
@@ -100,14 +110,14 @@ List of 2
 ```{r ans31}
 
 course <- list(
-  approve=TRUE, 
+  approve=TRUE,  #也可打T
   course_info=list(
     coursename="會計學", 
     type="必", 
     credits=3, 
     time_place=list(
       list(weekday="星期三", 
-           time_slots=c(7,8,9),
+           time_slots=c(7,8,9),  #題目的大括號是1~3共三個數的意思
            classroom ="商2F05")
       )
     )

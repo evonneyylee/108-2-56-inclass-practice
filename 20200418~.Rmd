@@ -214,7 +214,7 @@ str(listExample)
 str(listExample)
 
 # 108-1新增一科目成績
-listExample$學期$`108-1`[[2]] <-
+listExample$`學期`$`108-1`[[2]] <-
   list(name="產業經濟學")
 str(listExample)
 
@@ -289,23 +289,41 @@ str(list1)
 3.6節list
 ```{r}
 library(jsonlite)
+fromJSON("https://api.github.com/repos/tpemartin/108-2-56-inclass-practice/commits", simplifyDataFrame = F) -> githubCommit
+
+githubCommit[[3]][["commit"]][["committer"]]
+```
+
+```{r}
+githubCommit[[3]][["commit"]][["committer"]][-c(2)]    ->githubCommit[[3]][["commit"]][["commiter"]]      #要刪掉下面console的第二部分:email #刪完之後要回存才算真的有刪  #回存到整串，不是只有githubCommit，但太麻煩
+githubCommit[[3]][["commit"]][["committer"]]
+```
+
+```{r}
+githubCommit[[2]][["commit"]][["committer"]][c(2)] <- NULL  #也可用此法
+githubCommit[[2]][["commit"]][["committer"]]
+
+githubCommit[[2]][["commit"]][["committer"]]$email <- NULL  #或用此法
+githubCommit[[2]][["commit"]][["committer"]]
+```
+
+***
+```{r}
+library(jsonlite)
 fromJSON("https://data.ntpc.gov.tw/od/data/api/54DDDC93-589C-4858-9C95-18B2046CC1FC?$format=json", simplifyDataFrame = F) -> newTaipeiYouBike
 
+newTaipeiYouBike[[5]]
 ```
 
 ```{r}
+newTaipeiYouBike[[5]][-c(6,7)] -> newTaipeiYouBike[[6]]
+newTaipeiYouBike[[5]]
+
+newTaipeiYouBike[[5]][c(6,7)] <- NULL
+newTaipeiYouBike[[5]]
+
 
 ```
-
-
-```{r}
-
-```
-
-```{r}
-
-```
-
 
 
 #### list應用{-}
