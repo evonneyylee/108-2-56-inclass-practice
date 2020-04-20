@@ -114,16 +114,197 @@ listExample["學期"][["學期"]][["108-1"]][[1]]$teacher       #若只要取一
 
 
 
+## 新增/替換/刪除元素
+
+
+**範例**
+```{r}
+a <- c("1","b","TRUE") # 字串vector
+a
+a[[2]] <- "c" # 元素存在: 替換(修改，把b改成c)
+a[[4]] <- "7" # 4號位置元素不存在： 增加（新增,在TRUE後面加上7）
+a[c(5,6)] <- c("J", "K") # 5、6號位置元素不存在:： 增加、新增
+a
+```
+
+```{r}
+a[[7]] <- "Johnson"  #要用雙引號
+a
+
+a <- c(a, c("Mary"))  #向量疊代  #只有Mary一個值時，不需要用c #原本的7個值，再加上Mary這個值
+a
+```
+
+```{r}
+library(lubridate)
+list1 <- 
+  list(
+    list(
+      name="Jack",
+      birthday=ymd("1998-03-21"),
+      status=c(height=177, weight=80)
+    )
+  )
+
+str(list1)
+```
+
+```{r}
+# 更改日期
+list1[[1]]$birthday <- ymd("1997-03-21")
+
+# 新增資料 
+list1[[2]] <- list(
+  name="Mary",
+  birthday=ymd("1998-08-24")
+)
+
+str(list1)
+```
+
+
+```{r}
+list1[[1]][["age"]] <- 21# 新增
+list1[[2]]["age"] <- list(21)#由於[.]會保留母層結構，所以<-右側要使用和母層相同的型態設定
+# 改變「一個」時，使用[[ ]]比較不會錯。
+# 用一對引號就要保留母層結構
+str(list1)
+```
+
+```{r}
+list1[[1]][c("bloodType","registered")] <- list("AB",TRUE)#因為是一個中括號，所以要依循母層結構來做決定用c或list
+#要讓bloodType跑出字串AB，registered是一個值TRUE
+str(list1)
+```
+
+***
+
+```{r}
+listExample <- 
+  list(
+    student="小明",
+    `學期`=list(
+      `108-1`=list(
+        list(
+          name="個體經濟學",
+          teacher="Alice",
+          grade=85
+        )
+      ),
+      `108-2`=list(
+        list(
+          name="總體經濟學",
+          teacher="Mark",
+          grade=78
+        )
+      )
+    )
+  )
+# 有多少位置可選：
+length(listExample)
+str(listExample)
+```
+
+  * 108-1新增一個“產業經濟學”。
+
+  * 產業經濟學，同時加上教師Wen及成績88。
+
+
+```{r}
+str(listExample)
+
+# 108-1新增一科目成績
+listExample$學期$`108-1`[[2]] <-
+  list(name="產業經濟學")
+str(listExample)
+
+listExample$學期$`108-1`[[2]][c("teacher","grade")] <- 
+  list(
+    "Wen",
+    88
+    )
+str(listExample)
+```
+
+
+***
+
+刪除可以使用`[- c(數字位置)]` # 負號加：c只能用數值位置指定
+
+```{r}
+print(a)
+a[-c(1,3)]
+a[c(-2)]
+
+print(a)
+a[-c(1,3)] -> a   # 要回存島a才算真的刪除
+```
+
+```{r}
+library(lubridate)
+list1 <- 
+  list(
+    list(
+      name="Jack",
+      birthday=ymd("1998-03-21"),
+      status=c(height=177, weight=80)
+    ),
+    list(
+      name="Mary",
+      birthday=ymd("1998-08-24"),
+      status=c(height=163, weight=45),
+      age=21,
+      bloodType="AB"
+    )
+  )
+str(list1)
+```
+
+  *刪除Jack的status.
+  
+```{r}
+list1[[1]][-c(3)] -> list1[[1]]   #要永久刪除：記得存回小心回存的位置：針對第一個元素作的修改要存回第一個元素
+str(list1)
+```
+
+  *刪除Mary的status, bloodType
+```{r}
+list1[[2]][-c(3,5)] -> list1[[2]]
+str(list1)
+```
 
 
 
 
 
+list元素要刪除時也可以用[.]<-NULL, [[.]]<-NULL
+
+```{r}
+str(list1)
+list1[[2]][c(1,2)] <- NULL  #NULL和"-"最大的差別是"-"只能用[]，而NULL可以用[]、[[]]，$
+list1[[2]][-c(1,2)] -> list1[[2]]  #不用284行（NULL）就要用285行的做法：還要再回存到list1裡面的2
+
+str(list1)
+```
+3.6節list
+```{r}
+library(jsonlite)
+fromJSON("https://data.ntpc.gov.tw/od/data/api/54DDDC93-589C-4858-9C95-18B2046CC1FC?$format=json", simplifyDataFrame = F) -> newTaipeiYouBike
+
+```
+
+```{r}
+
+```
 
 
+```{r}
 
+```
 
+```{r}
 
+```
 
 
 
