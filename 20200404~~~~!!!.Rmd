@@ -92,11 +92,11 @@ print(`小明108學年課表C`)
 物件值可以取名
 ```{r}
 `小明108學年課表Ｄ` <- list(
-  `上學期`＝list(
+  `上學期`=list(
     semester=c("108-1"),
     courses=c("高級會計學","高等統計學")
     ),
-  `下學期`＝list(
+  `下學期`=list(
     semester=c("108-2"),
     courses=c("食在拉丁美洲")
   )
@@ -146,7 +146,7 @@ toJSON(commit)
   today=("2020-03-31"),
   tomorrow=("2020-04-01"),
   `台北市`=list(
-    highesttemp=25,
+    highesttemp=25,   #若等號左邊是打中文“最高氣溫”就要用反頓點！
     lowesttemp=18
   ),
   `新北市`=list(
@@ -157,6 +157,29 @@ toJSON(commit)
 
 print(`今明天氣預報`)
 ```
+
+
+```{r}
+library(lubridate)
+`今明天氣預報`<-list(     #存成某值（寫仔list之前）：反頓點
+  `日期`=list(
+    ymd("2020-03-31","2020-04-01")
+  ),           # element1 ends here
+  `台北市`=list(
+    "最高氣溫"=25,
+    "最低氣溫"=18
+  ),           # element2 ends here
+  `新北市`=list(
+    "最高氣溫"=24,
+    "最低氣溫"=15
+  )           # element3 ends here
+)
+
+print(`今明天氣預報`)     #呼叫存的值：反頓點
+```
+
+
+
 
 
 
@@ -171,7 +194,23 @@ save(commit,listExample, `小明108學年課表Ｄ`, fule="today.Rda")
 load("today.Rda")
 ```
 
+
+
+
+
+
 ```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
 
 ```
 

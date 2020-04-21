@@ -200,6 +200,25 @@ accidents <-list(
 str(accidents)
 ```
 
+```{r ans33 correct}
+
+accidents <-list(
+  time=ymd("2014/1/1"),
+  bureaus=list(
+    "板橋分局"=list(
+      type="駕駛人過失-其他",
+      casualties=1),
+    
+    "海山分局"=list(
+      type="駕駛人過失-搶越行人穿越道",
+      casualties=1)
+    
+  )
+)
+
+str(accidents)
+```
+
 
 ## 4 Factor
 
@@ -208,6 +227,8 @@ str(accidents)
 ```{r data4}
 source("https://www.dropbox.com/s/bvs0m4oxw7yaqxw/108-2-hw1-3.R?dl=1")
 fiveReceipts <- .randomReceipts(n=5)
+
+fiveReceipts
 ```
 
 ### 4.1
@@ -221,14 +242,22 @@ levels(fiveReceipts)
 
 print(levels_fiveReceipts)
 ```
+
+```{r ans41  correct}
+
+levels_fiveReceipts <-levels(fiveReceipts)
+
+print(levels_fiveReceipts)
+```
+
 ### 4.2
 使用as.integer()函數來顯示fiveReceipts在電腦的存法，並把回傳的結果值存在storage_fiveReceipts. 
 ```{r ans42}
 
-storage_fiveReceipts <- as.integer(fiveReceipts)
+storage_fiveReceipts <- as.integer(fiveReceipts)  #把data4 給的[1]59111 用他們在data4的levels中的位置呈現：[1]的5在levels的1號位置，[1]的９在levels的９號位置，依此類推
 
   
-print(storage_fiveReceipts)
+print(storage_fiveReceipts)   
 ```
 
 ### 4.3
@@ -236,7 +265,7 @@ print(storage_fiveReceipts)
 ```{r ans43}
 
 
-chr_fiveReceipts <- as.character(fiveReceipts)
+chr_fiveReceipts <- as.character(fiveReceipts)  #又跟data4給的[1]一樣
 
 print(chr_fiveReceipts)
 ```
@@ -244,8 +273,13 @@ print(chr_fiveReceipts)
 若我們想要把fiveReceipts的螢幕顯示值()用sum函數加總，在只使用as.{class name}函數下，要怎麼做？把sum完的結果存在sum_fiveReceipts。
 ```{r ans44}
 
+sum_fiveReceipts <- sum(as.integer(fiveReceipts))  #錯的！！會加成59111的位置：19444
+print(sum_fiveReceipts)
+```
 
-sum_fiveReceipts <- sum(as.integer(fiveReceipts))
+```{r ans44}
+
+sum_fiveReceipts <- sum(as.integer(as.character(fiveReceipts)))#題意就是把data4給的[1]加總，所以先把用as.integer()表示的位置：19444換回原代表數值59111，再用sum()把他們加總，並存成sum_fiveReceipts
 
 print(sum_fiveReceipts)
 ```
@@ -277,5 +311,7 @@ event_list <- list(
       "anchor","axe")
 )
 )
+
+str(event_list)
 ```
 
