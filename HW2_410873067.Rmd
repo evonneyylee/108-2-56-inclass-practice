@@ -90,13 +90,21 @@ course_update
 
 
 ```{r ans22 correct}
-course_update <- course    #「先」把course叫成course_update
+str(course)     #可先用此行看他的結構 最後刪掉！
+course_update <- course    #「先」把course叫成course_update，這樣比較不會亂！
 course_update[[2]][[2]] <- "選"
 as.logical(course_update[[1]]) -> course_update[[1]]   #把course_update下的第一層（approve)用logical(as.logical)表示，不是character(chr)
 course_update
 ```
 
 
+```{r ans22 correct}
+str(course)     #可先用此行看他的結構 最後刪掉！
+course_update <- course    #「先」把course叫成course_update，這樣比較不會亂！
+course_update$course$type <- "選"
+as.logical(course_update[[1]]) -> course_update[[1]]   #把course_update下的第一層（approve)用logical(as.logical,正確的class)表示，不是character(chr)
+course_update
+```
 
 
 ### 2.3 新增特定物件
@@ -111,6 +119,12 @@ course_update2
 ```{r ans23 correct}
 course_update2 <- course_update       #寫在第一行：「先」把course_update叫成course_update2
 course_update2[[2]]$teacher <- "紀學檜老師"    #後面都要用course_update2開頭！
+course_update2
+```
+
+```{r ans23 correct}
+course_update2 <- course_update       #寫在第一行：「先」把course_update叫成course_update2
+course_update2$course $teacher <- "紀學檜老師"    #後面都要用course_update2開頭！
 course_update2
 ```
 
@@ -147,7 +161,7 @@ List of 9
   ..$ cp2500: int [1:4] 40 15 15 15
 ```
 ```{r ans31}
-Pikachu <- Gamemaster[[1]][[27]]  # 0415第二個影片有 #把右邊環境（global environment) 中的Gamemaster中的第一層（pokemon）中的第27曾叫出來
+Pikachu <- Gamemaster$pokemon[[27]]  # 0415第二個影片有 #把右邊環境（global environment) 中的Gamemaster中的第一層（pokemon）中的第27曾叫出來
 str(Pikachu) #要看出list要用str()
 Pikachu
 ```
@@ -172,14 +186,14 @@ Pikachu_stats <- as.numeric( Pikachu$baseStats)   #第3-1題已有Pikachu這個�
 Pikachu_stats
 ```
 
-```{r ans32 correct}
+```{r ans32 較好correct}
 Pikachu_stats <- as.numeric(
   c(
   Pikachu$baseStats$atk,
   Pikachu$baseStats$def,
   Pikachu$baseStats$hp
   )
-)   #第3-1題已有Pikachu這個物件了
+)   #第3-1題已有Pikachu這個物件了  #vector物件 用c()
 
 Pikachu_stats   #不用上面程式的中間兩行，因為只是要取出那三個數
 ```
@@ -281,6 +295,25 @@ Gamemaster$pokemon[[731]] <-list(
 Gamemaster$pokemon[[731]] -> Mimikyu
 Gamemaster
 ```
+
+
+```{r ans34 correct}
+Jigglypuff -> Mimikyu  #得到名字是Mimikyu但內容是Jigglypuff，下面再改
+  Mimikyu$dex <- as.integer(778)
+  Mimikyu$speciesName <- "Mimikyu"
+  Mimikyu$speciesId <- "mimikyu"
+  Mimikyu$baseStats <-list(
+    atk=as.integer(112),
+    def=as.integer(96),
+    hp=as.integer(111) 
+  )
+  Mimikyu$types <- c("ghost","fairy")
+
+  
+Gamemaster$pokemon[[731]] -> Mimikyu    #把Mimikyu新增到Gamemaster圖鑑內
+Gamemaster
+```
+
 
 
 # 恭喜你寫完了!最後記得回去檢查注意事項有沒有都做到，避免被白扣分喔~

@@ -41,7 +41,7 @@ library(lubridate); library(jsonlite); library(readr)
 "Error in library(lubridate) : there is no package called ‘lubridate’"
 
 ```{r ans21c}
-install.packages(c("lubridate"))  #此題不需執行也不需存在哪邊，因只是要確定自己知道怎麼裝
+install.packages(c("lubridate"))  #此題不需執行也不需存在哪邊，因只是要確定自己知道怎麼裝還有看不看得懂警訊
 ```
 
 ### 2.2
@@ -51,14 +51,15 @@ taiwan_time <- "西元2019年4月12日 12點55分30秒"
 oslo_time <- "18.11.2018 15:33:02"
 ```
 
-其中taiwan_time為台灣時間，oslo_time為挪威Oslo時間。請將兩個時間存在一個atomic vector叫two_times的物件裡，且為Date/Time class（即POSIXct POSIXt class）。
+其中taiwan_time為台灣時間，oslo_time為挪威Oslo時間。請將兩個時間存在一個atomic vector叫two_times的物件裡，且為Date/Time class
+                      （即POSIXct POSIXt class）。
 
 ```{r ans22}
 # 用vector # 3.5.3.3節
 two_times <- c(
-  ymd_hms(taiwan_time,tz="Asia/Taipei"), #向量1 #Date/Time #怎麼存
-  dmy_hms(oslo_time,tz="Europe/Oslo") #向量2 #Date/Time
-)
+  ymd_hms(taiwan_time,tz="Asia/Taipei"), #向量1 #Date/Time #怎麼存：tz用來告訴電腦以台灣時間存，因現在不是要UTC時間   #CST是台灣時間   ＃ymd_hms做字串轉換（怎麽存）
+  dmy_hms(oslo_time,tz="Europe/Oslo") #向量2 #Date/Time   #單獨執行這行會是CET，但整個一起執行會以本台電腦時間（台灣時間）並命爲CST
+)    #vector
 
 
 two_times 
@@ -67,7 +68,7 @@ two_times
 ### 2.3
 將two_times改成美國Chicago時間顯示的two_times_chicago：
 
-```{r ans23}
+```{r ans23 錯誤}
 
 two_times_chicago <- c(
   ymd_hms(taiwan_time,tz="America/Chicago"),
@@ -78,9 +79,8 @@ two_times_chicago
 ```
 
 ```{r ans23 correct}
-two_times_chicago <- with_tz(two_times, tz="America/Chicago")
 
-with_tz(two_times, tz="America/Chicago") -> #怎麼顯示
+with_tz(two_times, tzone="America/Chicago") -> #用到with_tz這個功能，做顯示方式的轉換（怎麼顯示）#with_tz不能在裡面放時間格式的資料 #改時區！#時區前用tzone？
 two_times_chicago #存回檔案物件
 
 two_times_chicago
@@ -181,7 +181,7 @@ List of 2
 此list資訊自行目測找出正確資訊手動輸入即可，此題考驗同學是否有讀懂此平台資料說明的能力。
 
 可用str(accidents)來檢查你的答案是否有符合格式。
-```{r ans33}
+```{r ans33  錯的！}
 
 accidents <-list(
   time=as_date("103-01-01", format="%Y-%m-%d", tz="Asia/Taipei"),
@@ -234,7 +234,7 @@ fiveReceipts
 ### 4.1
 用levels()函數來顯示fiveReceipts有那幾個levels，並把回傳的結果值存在levels_fiveReceipts. 
 
-```{r ans41}
+```{r ans41  錯的！}
 
 levels_fiveReceipts <-factor(fiveReceipts)
 levels(fiveReceipts)
@@ -271,13 +271,13 @@ print(chr_fiveReceipts)
 ```
 ### 4.4
 若我們想要把fiveReceipts的螢幕顯示值()用sum函數加總，在只使用as.{class name}函數下，要怎麼做？把sum完的結果存在sum_fiveReceipts。
-```{r ans44}
+```{r ans44   錯的！}
 
 sum_fiveReceipts <- sum(as.integer(fiveReceipts))  #錯的！！會加成59111的位置：19444
 print(sum_fiveReceipts)
 ```
 
-```{r ans44}
+```{r ans44 correct}
 
 sum_fiveReceipts <- sum(as.integer(as.character(fiveReceipts)))#題意就是把data4給的[1]加總，所以先把用as.integer()表示的位置：19444換回原代表數值59111，再用sum()把他們加總，並存成sum_fiveReceipts
 
@@ -299,10 +299,10 @@ source("https://www.dropbox.com/s/xtge2ghfb7dhple/108-2-hw1-4.R?dl=1")
 
 ```{r ans5c, eval=F}
 yy <- 2020
-mm <- "Mar"
+mm <- "Mar."
 dd <- 15
 event_list <- list(
-  time=ymd(paste0(yy,mm,dd)),
+  time=lubridate::ymd(paste0(yy,",",mm,dd)),   #因先執行了上面的程式把套件都移除了，所以要自己打上lubridate::
   list(
     name="小明",
     `是否完成`=T,
@@ -314,4 +314,6 @@ event_list <- list(
 
 str(event_list)
 ```
+
+
 
