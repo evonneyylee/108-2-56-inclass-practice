@@ -118,8 +118,8 @@ table$國文
 ### 2.2 str_detect()
 請取出10位學生中志願為北大的學生名字並存到名為ntpu_namelist的答案物件(class為chr):
 ```{r ans22}
-str_detect(students10$`志願`, "北大")
-ntpu_namelist <- students10$`姓名`[c(T,T,F,F,T,F,F,T,T,T)]
+print(students10[c("姓名", "志願")])
+ntpu_namelist <- students10$`姓名`[stringr::str_detect(students10$`志願`, "北大")]   #str_detect:從逗號前面的挑出有包括逗號後面的所有的項目
 
 ntpu_namelist
 ```
